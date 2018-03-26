@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "323914227896",
+    "firebase_url": "https://achieveme-8359.firebaseio.com",
+    "project_id": "achieveme-8359",
+    "storage_bucket": "achieveme-8359.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323914227896:android:9cccfd7d455f591e",
+        "android_client_info": {
+          "package_name": "com.ozenix.achieveme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323914227896-vo1l5p8ch21sj7npdcsobhff1p3237a0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ozenix.achieveme",
+            "certificate_hash": "bdfc8ddfd99b22a63d5108997a055fbf5a37a35f"
+          }
+        },
+        {
+          "client_id": "323914227896-mco452o2pac2ckiae2oe6o6lpbs0isjv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfwoaUW2TOvT03i6JCZ0qSc0-VN82Tg9g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323914227896-mco452o2pac2ckiae2oe6o6lpbs0isjv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
