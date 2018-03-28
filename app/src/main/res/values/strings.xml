@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="image_descriptor" />
+    <string name="image_de_l_achivement">image de l\'achivement</string>
+</resources>
