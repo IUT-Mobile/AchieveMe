@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "323914227896-om52lt4rbbh94t29lnm5qcmmagvruqjk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ozenix.achieveme",
+            "certificate_hash": "99fb078c25b205dc41222380a75bc5e60a326faf"
+          }
+        },
+        {
           "client_id": "323914227896-5krakhamamt19t6o6k0aok3tpeddts2s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
