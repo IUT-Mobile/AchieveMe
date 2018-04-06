@@ -7,10 +7,6 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-/**
- * Created by p16001500 on 28/03/18.
- */
-
 public class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
     List<Achievement> list;

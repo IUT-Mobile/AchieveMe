@@ -1,8 +1,5 @@
 package com.ozenix.achieveme;
 
-/**
- * Created by p16001500 on 28/03/18.
- */
 
 public class Achievement {
     private String text;

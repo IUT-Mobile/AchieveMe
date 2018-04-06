@@ -34,17 +34,27 @@ public class CurrentAchievement extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_current_achievement);
+        setContentView(R.layout.activity_achievement_test);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Achievement");
-        //achievementList = findViewById(R.id.achievement_list);
+        achievementList = findViewById(R.id.achievement_list);
 
-       // final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, achievements);
-        //achievementList.setAdapter(arrayAdapter);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, achievements);
+        achievementList.setAdapter(arrayAdapter);
+
+
+        //Contient les cards
+        recyclerView = findViewById(R.id.recyclerView);
+
+        //définit l'agencement des cellules, ici de façon verticale, comme une ListView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //pour adapter en grille comme une RecyclerView, avec 2 cellules par ligne
+        //recyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
 
         mDatabase.addChildEventListener(new ChildEventListener() {
@@ -53,7 +63,11 @@ public class CurrentAchievement extends AppCompatActivity {
                 String value = dataSnapshot.getValue(String.class);
                 achievements.add(value);
                 cities.add(new Achievement(value,"https://img.ev.mu/images/villes/5580/1605x642/5580.jpg"));
-                //arrayAdapter.notifyDataSetChanged();
+                arrayAdapter.notifyDataSetChanged();
+
+                //puis créer un MyAdapter, lui fournir notre liste de villes.
+                //cet adapter servira à remplir notre recyclerview
+                recyclerView.setAdapter(new Adapter(cities));
             }
 
             @Override
@@ -78,26 +92,10 @@ public class CurrentAchievement extends AppCompatActivity {
         });
 
 
-
-
-        //remplir la ville
-        //ajouterVilles();
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
-        //définit l'agencement des cellules, ici de façon verticale, comme une ListView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //pour adapter en grille comme une RecyclerView, avec 2 cellules par ligne
-        //recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-
-        //puis créer un MyAdapter, lui fournir notre liste de villes.
-        //cet adapter servira à remplir notre recyclerview
-        recyclerView.setAdapter(new Adapter(cities));
     }
 
     private void ajouterVilles() {
-        cities.add(new Achievement("France","https://img.ev.mu/images/villes/5580/1605x642/5580.jpg"));
+        //cities.add(new Achievement("France","https://img.ev.mu/images/villes/5580/1605x642/5580.jpg"));
         //cities.add(new Achievement("Angleterre","https://images.salaun-holidays.com/(Image)-image-Angleterre-Londres-22-it_56320684-09032017.jpg"));
         //cities.add(new Achievement("Allemagne","http://tanned-allemagne.com/wp-content/uploads/2012/10/pano_rathaus_1280.jpg"));
         //cities.add(new Achievement("Espagne","https://thebettervacation.com/wp-content/uploads/2018/02/Park-Guell-Barcelona.jpg"));

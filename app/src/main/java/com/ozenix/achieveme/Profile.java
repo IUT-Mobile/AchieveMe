@@ -7,8 +7,16 @@ import java.util.ArrayList;
  */
 
 public class Profile {
+    private String userId;
     private String username;
     private ArrayList<Achievement> achievement;
 
+    public Profile(String userId, String username) {
+        this.userId = userId;
+        this.username = username;
+    }
 
+    public String getUserId() {
+        return userId;
+    }
 }
