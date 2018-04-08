@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -36,9 +37,9 @@ public class MainMenu extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
-    Button button_logout;
+    /*Button button_logout;
     Button button_map;
-    Button button_profile;
+    Button button_profile;*/
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
@@ -67,16 +68,16 @@ public class MainMenu extends AppCompatActivity {
 
             profile = new Profile(userId, email, name, photoUrl);
 
-
             //Header porfile setup
             ImageView imageViewPic = findViewById(R.id.picUserGoogle);
-            imageViewPic.setImageURI(photoUrl);
+            //imageViewPic.setImageURI(MainMenu.profile.getImageUrl());
 
             TextView textViewName = findViewById(R.id.usernameGoogle);
-            textViewName.setText(name);
+            textViewName.setText(MainMenu.profile.getUsername());
 
             TextView textViewMail = findViewById(R.id.mailGoogle);
-            textViewMail.setText(email);
+            textViewMail.setText(MainMenu.profile.getEmail());
+
 
             mDatabase = FirebaseDatabase.getInstance().getReference().child("User").child(profile.getUserId());
 
@@ -94,23 +95,17 @@ public class MainMenu extends AppCompatActivity {
 
                 }
             });
-
-
         }
-
-
-
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_achievement_test);
+        setContentView(R.layout.fragment_main_menu);
 
-        button_logout = findViewById(R.id.logout_btn);
+        /*button_logout = findViewById(R.id.logout_btn);
         button_map = findViewById(R.id.map_btn);
-        button_profile = findViewById(R.id.profile_btn);
+        button_profile = findViewById(R.id.profile_btn);*/
 
 
 
@@ -125,7 +120,7 @@ public class MainMenu extends AppCompatActivity {
             }
         };
 
-        button_logout.setOnClickListener(new View.OnClickListener() {
+        /*button_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAuth.signOut();
@@ -144,7 +139,7 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(MainMenu.this, ProfileAchievement.class));
             }
-        });
+        });*/
 
         mDrawerLayout = findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
