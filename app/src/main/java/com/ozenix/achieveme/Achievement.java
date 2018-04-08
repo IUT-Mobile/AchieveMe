@@ -2,33 +2,29 @@ package com.ozenix.achieveme;
 
 
 public class Achievement {
+    private String name;
+    private Double latitude;
+    private Double longitude;
     private String text;
+
     private String imageUrl;
     private Category category;
 
-    public Achievement(String text, String imageUrl) {
-        this.text = text;
-        this.imageUrl = imageUrl;
+    public Achievement(String name, Double latitude, Double longitude) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getName() {
+        return name;
     }
 
-    public String getText() {
-        return text;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public Double getLongitude() {
+        return longitude;
     }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
 }

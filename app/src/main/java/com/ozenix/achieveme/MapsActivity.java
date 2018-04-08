@@ -25,10 +25,25 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import android.Manifest;
+import android.util.Log;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -36,10 +51,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected static final int REQUEST_CHECK_SETTINGS = 1;
     private GoogleMap mMap;
 
+    private DatabaseReference mDatabase;
+    private ArrayList<Achievement> availableAchievements = new ArrayList<>();
+    private HashMap<String, Marker> markers = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -62,6 +82,59 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         createLocationRequest();
         check();
 
+
+        //GetDatabaseAchievements
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Achievement").child("Location").child("Europe").child("Achievement").child("France").child("Achievement").child("Aix-en-Provence").child("Achievement");
+
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.i("BOB", dataSnapshot.getKey());
+
+                //for (DataSnapshot achievements : dataSnapshot.getChildren()) {
+
+                String name = dataSnapshot.child("Name").getValue(String.class);
+                Double lat = dataSnapshot.child("Lat").getValue(Double.class);
+                Double lng = dataSnapshot.child("Lng").getValue(Double.class);
+
+                Achievement achievement = new Achievement(name, lat, lng);
+
+                availableAchievements.add(achievement);
+
+                Marker marker = mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(achievement.getLatitude(), achievement.getLongitude()))
+                        .title(achievement.getName()));
+                markers.put(name, marker);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                String name = dataSnapshot.child("Name").getValue(String.class);
+
+                Marker marker = markers.get(name);
+                marker.remove();
+                markers.remove(name);
+
+                testAchievementGet();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         /*// Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -75,7 +148,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             // Show rationale and request permission.
             ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
@@ -98,7 +171,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                 // All location settings are satisfied. The client can initialize
                 // location requests here.
-                // ...
+
                 //  move the camera to Aix
                 LatLng aix = new LatLng(43.526429, 5.445454);
                 //LatLngBounds AIX = new LatLngBounds(
@@ -107,7 +180,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // mMap.setLatLngBoundsForCameraTarget(AIX);
                 //mMap.setMinZoomPreference(16.0f);
                 // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(43.526429, 5.445454), 16));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(aix,16));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(aix, 10));
 
 
             }
@@ -143,22 +216,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
+                for (Achievement achievement : availableAchievements){
+                    Location achievementLocation = new Location(achievement.getName());
+                    achievementLocation.setLatitude(achievement.getLatitude());
+                    achievementLocation.setLongitude(achievement.getLongitude());
 
-                Location maison = new Location("Maison");
-                maison.setLatitude(-20.887577);
-                maison.setLongitude(55.446872);
-                if(location.distanceTo(maison) < 100){
-                    AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
-                    alertDialog.setTitle("Congrats");
-                    alertDialog.setMessage("You found a new place");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
+                    if (location.distanceTo(achievementLocation) < 100) {
+
+                        //Ajouter dans la BD
+                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User").child(MainMenu.profile.getUserId()).child("Achievement");
+                        Date date = new Date();
+                        mDatabase.child(achievement.getName()).setValue(date.toString());
+
+
+                        AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
+                        alertDialog.setTitle("Nouveau succès : " + achievement.getName());
+                        alertDialog.setMessage("Vous avez découvert un nouveau lieu !");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
+
                 }
+
+
 
             }
 
@@ -179,5 +264,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 20, locationListener);
 
 
+    }
+
+    public void testAchievementGet(){
+        for (Achievement achievement : availableAchievements){
+            Location achievementLocation = new Location(achievement.getName());
+            achievementLocation.setLatitude(achievement.getLatitude());
+            achievementLocation.setLongitude(achievement.getLongitude());
+
+            if (achievement.getName().equals("Hippopotamus")) {
+
+                //Ajouter dans la BD
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("User").child(MainMenu.profile.getUserId()).child("Achievement");
+                Date date = new Date();
+                mDatabase.child(achievement.getName()).setValue(date.toString());
+
+
+                AlertDialog alertDialog = new AlertDialog.Builder(MapsActivity.this).create();
+                alertDialog.setTitle("Nouveau succès : " + achievement.getName());
+                alertDialog.setMessage("Vous avez découvert un nouveau lieu !");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+
+        }
     }
 }

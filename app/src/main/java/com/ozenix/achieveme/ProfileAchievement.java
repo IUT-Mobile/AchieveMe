@@ -17,8 +17,6 @@ import java.util.ArrayList;
 
 public class ProfileAchievement extends AppCompatActivity {
 
-    private Profile profile;
-
     private DatabaseReference mDatabase;
     private ListView achievementList;
     private ArrayList<String> achievements = new ArrayList<>();
@@ -31,26 +29,8 @@ public class ProfileAchievement extends AppCompatActivity {
         /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);*/
 
-        profile = new Profile("1", "Guilhem");
-
-
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Profile");
-
-        /*mDatabase.orderByChild("Name").equalTo("Guilhem").once("value",snapshot => {
-            const userData = snapshot.val();
-            if (userData){
-                console.log("exists!");
-            }
-        });*/
-
-        mDatabase.push().setValue("Guilhem");
-
-
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Profile").child(profile.getUserId()).child("Achievement");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("User").child(MainMenu.profile.getUserId()).child("Achievement");
         achievementList = findViewById(R.id.achievement_list);
-
-
-
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, achievements);
         achievementList.setAdapter(arrayAdapter);
@@ -58,7 +38,7 @@ public class ProfileAchievement extends AppCompatActivity {
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String value = dataSnapshot.getValue(String.class);
+                String value = dataSnapshot.getKey();
                 achievements.add(value);
                 arrayAdapter.notifyDataSetChanged();
             }
@@ -70,7 +50,7 @@ public class ProfileAchievement extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
+                String value = dataSnapshot.getKey();
                 achievements.remove(value);
                 arrayAdapter.notifyDataSetChanged();
             }

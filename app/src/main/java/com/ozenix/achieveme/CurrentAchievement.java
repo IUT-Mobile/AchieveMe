@@ -29,7 +29,7 @@ public class CurrentAchievement extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private ListView achievementList;
-    private ArrayList<String> achievements = new ArrayList<>();
+    private ArrayList<String> allAchievements = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +40,13 @@ public class CurrentAchievement extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Achievement");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Achievement").child("Location").child("Europe").child("Achievement").child("France").child("Achievement").child("Aix-en-Provence");
         achievementList = findViewById(R.id.achievement_list);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, achievements);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, allAchievements);
         achievementList.setAdapter(arrayAdapter);
 
-
+/*
         //Contient les cards
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -56,43 +56,47 @@ public class CurrentAchievement extends AppCompatActivity {
         //pour adapter en grille comme une RecyclerView, avec 2 cellules par ligne
         //recyclerView.setLayoutManager(new GridLayoutManager(this,2));
 
+       */
+
 
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String value = dataSnapshot.getValue(String.class);
-                achievements.add(value);
-                cities.add(new Achievement(value,"https://img.ev.mu/images/villes/5580/1605x642/5580.jpg"));
+                for (DataSnapshot achievements : dataSnapshot.getChildren()) {
+                    String achievement = achievements.child("Name").getValue(String.class);
+                    allAchievements.add(achievement);
+                }
+            //cities.add(new Achievement(value,"https://img.ev.mu/images/villes/5580/1605x642/5580.jpg"));
                 arrayAdapter.notifyDataSetChanged();
 
-                //puis créer un MyAdapter, lui fournir notre liste de villes.
+                /*//puis créer un MyAdapter, lui fournir notre liste de villes.
                 //cet adapter servira à remplir notre recyclerview
-                recyclerView.setAdapter(new Adapter(cities));
-            }
+                recyclerView.setAdapter(new Adapter(cities));*/
+        }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+        @Override
+        public void onChildChanged (DataSnapshot dataSnapshot, String s){
 
-            }
+        }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+        @Override
+        public void onChildRemoved (DataSnapshot dataSnapshot){
 
-            }
+        }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+        @Override
+        public void onChildMoved (DataSnapshot dataSnapshot, String s){
 
-            }
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        @Override
+        public void onCancelled (DatabaseError databaseError){
 
-            }
-        });
+        }
+    });
 
 
-    }
+}
 
     private void ajouterVilles() {
         //cities.add(new Achievement("France","https://img.ev.mu/images/villes/5580/1605x642/5580.jpg"));
