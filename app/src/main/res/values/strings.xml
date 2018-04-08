@@ -216,5 +216,30 @@
     <string name="donate_high">9.99 USD</string>
     <string name="donate_exception">Sorry, can not do this!</string>
     <string name="title_activity_maps">Map</string>
+    <string name="pref_previously_started" />
+
+    <string name="tutorial">Tutoriel</string>
+    <string name="back">Retour au tutoriel</string>
+    <string name="content">The page description.</string>
+    <string name="goToActivity">Go seconde activitée</string>
+    <string name="firstLaunchSentence">Si vous voyez ceci et non le tuto, ce n\'est pas votre premier lancement !</string>
+    <string name="user">Paul CHALAS</string>
+    <string name="usermail">polochalas@gmail.com</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="next">Suivant</string>
+    <string name="prev">Précédent</string>
+    <string name="profile">Votre profil</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="success"> Achievements </string>
+    <string name="main_menu_infos"> Dans ce menu, tu trouveras toutes les dernières informations concernant tes succès ou encore ceux qu\'ont réussi à réaliser tes amis et cela dès la prochaine mise à jour dans laquelle tu pourras ajouter des amis avec qui partager des défis !  </string>
+    <string name="main_menu_hint"> En attendant, les développeurs se reposent un peu, parce que les périodes de partiels, c\'est pas facile…</string>
+    <string name="image_desc">Little bird sleeping picture</string>
+    <string name="welcome">Bienvenue, troubadour !</string>
+    <string name="tutorial_body_text">Ici, le tutoriel s\'ouvrira, parce que la magie a opéré !</string>
+    <string name="picGoogle">profilePicGoogle</string>
+    <string name="usernameGoogle">PseudonymeDeBogoss</string>
+    <string name="emailGoogle">leMailUtilisateur@google.com</string>
+    <string name="profile_hint">Quelle fabuleuse image vous avez là !</string>
 
 </resources>

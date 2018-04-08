@@ -1,5 +1,7 @@
 package com.ozenix.achieveme;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -66,6 +68,9 @@ public class ProfileAchievement extends AppCompatActivity {
             }
         });
 
+    }
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, ProfileAchievement.class);
     }
 
 }
