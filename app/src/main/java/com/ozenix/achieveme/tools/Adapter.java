@@ -1,9 +1,13 @@
-package com.ozenix.achieveme;
+package com.ozenix.achieveme.tools;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ozenix.achieveme.R;
+import com.ozenix.achieveme.mechanisms.Achievement;
+import com.ozenix.achieveme.tools.ViewHolder;
 
 import java.util.List;
 

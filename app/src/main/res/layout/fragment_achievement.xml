@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ozenix.achieveme.fragments.AchievementFragment">
+
+
+    <TextView
+        android:id="@+id/achievementTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="@string/success"
+        android:textColor="@color/colorTransparentWhite"
+        android:textSize="18sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarAchievement"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/achievementTitle"
+        android:layout_alignStart="@+id/achievementTitle"
+        android:layout_below="@+id/achievementTitle"
+        android:layout_marginTop="21dp" />
+</RelativeLayout>

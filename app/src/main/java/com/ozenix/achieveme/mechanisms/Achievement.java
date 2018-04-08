@@ -1,4 +1,4 @@
-package com.ozenix.achieveme;
+package com.ozenix.achieveme.mechanisms;
 
 
 public class Achievement {

@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ozenix.achieveme.fragments.ProfileFragment">
+
+
+    <TextView
+        android:id="@+id/profile_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/profile"
+        android:textColor="@color/colorWhite"
+        android:textSize="30sp" />
+
+
+    <ImageView
+        android:id="@+id/imgProfilePic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtName"
+        android:layout_alignEnd="@+id/profile_title"
+        android:layout_alignStart="@+id/profile_title"
+        android:layout_below="@+id/profile_title"
+        android:contentDescription="@string/picGoogle"
+        android:src="@drawable/eat_icon" />
+
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:padding="5dp"
+        android:text="@string/usernameGoogle"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp"
+        android:padding="5dp"
+        android:text="@string/emailGoogle"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/profile_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="73dp"
+        android:text="@string/profile_hint"
+        android:textColor="@color/colorTransparentWhite"
+        android:textSize="12sp" />
+
+</RelativeLayout>
