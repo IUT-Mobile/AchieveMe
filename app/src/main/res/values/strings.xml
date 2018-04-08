@@ -215,5 +215,6 @@
     <string name="donate_low">1.99 USD</string>
     <string name="donate_high">9.99 USD</string>
     <string name="donate_exception">Sorry, can not do this!</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

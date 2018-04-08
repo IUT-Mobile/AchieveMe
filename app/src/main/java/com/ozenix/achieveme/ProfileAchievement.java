@@ -36,12 +36,12 @@ public class ProfileAchievement extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Profile");
 
-        mDatabase.orderByChild("Name").equalTo("Guilhem").once("value",snapshot => {
+        /*mDatabase.orderByChild("Name").equalTo("Guilhem").once("value",snapshot => {
             const userData = snapshot.val();
             if (userData){
                 console.log("exists!");
             }
-        });
+        });*/
 
         mDatabase.push().setValue("Guilhem");
 
