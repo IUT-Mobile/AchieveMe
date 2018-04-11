@@ -69,14 +69,15 @@ public class MainMenu extends AppCompatActivity {
             profile = new Profile(userId, email, name, photoUrl);
 
             //Header porfile setup
-            ImageView imageViewPic = findViewById(R.id.picUserGoogle);
-            //imageViewPic.setImageURI(MainMenu.profile.getImageUrl());
+
+            /*ImageView imageViewPic = findViewById(R.id.picUserGoogle);
+            imageViewPic.setImageURI(MainMenu.profile.getImageUrl());
 
             TextView textViewName = findViewById(R.id.usernameGoogle);
             textViewName.setText(MainMenu.profile.getUsername());
 
             TextView textViewMail = findViewById(R.id.mailGoogle);
-            textViewMail.setText(MainMenu.profile.getEmail());
+            textViewMail.setText(MainMenu.profile.getEmail());*/
 
 
             mDatabase = FirebaseDatabase.getInstance().getReference().child("User").child(profile.getUserId());
@@ -101,7 +102,7 @@ public class MainMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_main_menu);
+        setContentView(R.layout.main);
 
         /*button_logout = findViewById(R.id.logout_btn);
         button_map = findViewById(R.id.map_btn);
@@ -200,6 +201,8 @@ public class MainMenu extends AppCompatActivity {
                 showTutorial();
                 finish();
                 break;
+            case (R.id.menu_logout):
+                mAuth.signOut();
             default:
                 fragmentClass = MainMenuFragment.class;
         }
