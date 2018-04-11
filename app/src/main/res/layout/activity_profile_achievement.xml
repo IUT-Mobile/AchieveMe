@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.ozenix.achieveme.ProfileAchievement">
 
-    <Button
-        android:id="@+id/logout_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:text="Button" />
-
     <ListView
         android:id="@+id/achievement_list"
         android:layout_width="match_parent"
